@@ -62,7 +62,6 @@ class MainInterface(object):
         frame.grid_columnconfigure(0, weight=1)
 
         text = Text(frame)
-        text.insert('1.0', "hoi")
         text.grid(row=0, column=0, sticky="nsew", in_=frame)
 
         scrollbar = Scrollbar(frame, command=text.yview)
