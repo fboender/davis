@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
-from Tkinter import *
-import ttk
+try:
+    from Tkinter import *  # Python 2
+    import ttk
+except ImportError:
+    from tkinter import *  # Python 3
+    from tkinter import ttk
 import json
 import pprint
 

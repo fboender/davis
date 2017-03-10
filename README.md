@@ -14,7 +14,9 @@ Here's what it looks like:
 
 ## Installation
 
-FIXME
+For Python v3 on Ubuntu, install the `python3-tk` package:
+
+    sudo apt-get install python3-tk
 
 ## Usage
 
@@ -30,8 +32,7 @@ pop-up a window that lets you inspect `my_data`:
 
 ![](https://raw.githubusercontent.com/fboender/davis/master/contrib/scrsht_inline.png)
 
-You can also invoke Davis from the command-line to load data from STDIN or a
-file:
+You can also invoke Davis from the command-line to load data from a file:
 
     $ wget -O r_programming.json https://www.reddit.com/r/programming/.json
     $ davis.py r_programming.json
