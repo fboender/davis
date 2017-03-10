@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
+import json
+import pprint
 try:
     from Tkinter import *  # Python 2
     import ttk
 except ImportError:
     from tkinter import *  # Python 3
     from tkinter import ttk
-import json
-import pprint
 
 
 class MainInterface(object):
