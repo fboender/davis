@@ -16,6 +16,9 @@ class MainInterface(object):
         self.item_values = {}
 
         self.window = Tk()
+        self.show_magic = IntVar()
+        self.show_raw_value = IntVar()
+
         self.window.title("Python Data Visualizer")
         self.window.bind("<Escape>", lambda e: e.widget.quit())
         self.window.geometry('700x500')
@@ -27,12 +30,23 @@ class MainInterface(object):
         self.pane.grid_rowconfigure(0, weight=1)
         self.pane.grid_columnconfigure(0, weight=1)
 
+        options_frame = self.mk_options(self.pane)
+        self.pane.add(options_frame)
+
         tree_view_frame = self.mk_tree_view(self.pane)
         self.tree_set_children('', obj)
         self.pane.add(tree_view_frame)
 
         value_view_frame = self.mk_value_view(self.pane)
         self.pane.add(value_view_frame)
+
+    def mk_options(self, master):
+        frame = Frame(master)
+        c = Checkbutton(master, text="Show magic methods", variable=self.show_magic)
+        c.grid(row=0, column=0, sticky="nesw", in_=frame)
+        c = Checkbutton(master, text="Show raw value", variable=self.show_raw_value)
+        c.grid(row=0, column=1, sticky="nesw", in_=frame)
+        return frame
 
     def mk_tree_view(self, master):
         """
@@ -90,7 +104,10 @@ class MainInterface(object):
         item_id = self.tree.selection()[0]
         val_value = self.item_values[item_id]
         self.text.delete(1.0, END)
-        self.text.insert("1.0", pprint.pformat(val_value))
+        if self.show_raw_value.get() == 0:
+            self.text.insert("1.0", pprint.pformat(val_value))
+        else:
+            self.text.insert("1.0", val_value)
 
     def ev_treeview_open(self, ev):
         """
@@ -110,6 +127,9 @@ class MainInterface(object):
         """
         obj_type = type(obj).__name__
         obj_val = repr(obj)
+
+        if self.show_magic.get() == 0 and obj_name.startswith("__"):
+            return
 
         # Add a row to the tree
         if obj_type == 'dict':
