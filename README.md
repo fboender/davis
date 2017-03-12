@@ -14,9 +14,20 @@ Here's what it looks like:
 
 ## Installation
 
-For Python v3 on Ubuntu, install the `python3-tk` package:
+Davis requires Tkinter and Python v2.7 / v3.x.
+
+To install Tkinter, see: http://tkinter.unpythonic.net/wiki/How_to_install_Tkinter
+
+### Ubuntu / Debian with python v2.7:
+
+    sudo apt-get install python-tk
+    sudo pip install davis
+
+### Ubuntu / Debian with python v3:
 
     sudo apt-get install python3-tk
+    sudo pip install davis
+
 
 ## Usage
 
