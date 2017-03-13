@@ -41,20 +41,24 @@ class MainInterface(object):
         self.pane.add(value_view_frame)
 
     def mk_options(self, master):
-        frame = Frame(master)
+        frame = Frame(master, border=10)
         frame.grid_rowconfigure(0, weight=1)
         frame.grid_columnconfigure(1, weight=1)
 
-        c = Checkbutton(master, text="Show magic methods", variable=self.show_magic)
-        c.grid(row=0, column=0, sticky="w", in_=frame)
+        l = Label(master, text="Show magic methods")
+        l.grid(row=0, column=0, sticky="e", in_=frame)
+        c = Checkbutton(master, text="", variable=self.show_magic)
+        c.grid(row=0, column=1, sticky="w", in_=frame, pady=5)
 
-        c = Checkbutton(master, text="Show raw value", variable=self.show_raw_value)
-        c.grid(row=1, column=0, sticky="w", in_=frame)
+        l = Label(master, text="Show raw value")
+        l.grid(row=1, column=0, sticky="e", in_=frame)
+        c = Checkbutton(master, text="", variable=self.show_raw_value)
+        c.grid(row=1, column=1, sticky="w", in_=frame, pady=5)
 
         l = Label(master, text="Path to item: ")
         l.grid(row=2, column=0, sticky="e", in_=frame)
         e = Entry(master)
-        e.grid(row=2, column=1, sticky="nsew", in_=frame)
+        e.grid(row=2, column=1, sticky="nsew", in_=frame, pady=5)
         self.accessor = e
 
         return frame
