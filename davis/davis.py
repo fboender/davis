@@ -42,10 +42,21 @@ class MainInterface(object):
 
     def mk_options(self, master):
         frame = Frame(master)
+        frame.grid_rowconfigure(0, weight=1)
+        frame.grid_columnconfigure(1, weight=1)
+
         c = Checkbutton(master, text="Show magic methods", variable=self.show_magic)
-        c.grid(row=0, column=0, sticky="nesw", in_=frame)
+        c.grid(row=0, column=0, sticky="w", in_=frame)
+
         c = Checkbutton(master, text="Show raw value", variable=self.show_raw_value)
-        c.grid(row=0, column=1, sticky="nesw", in_=frame)
+        c.grid(row=1, column=0, sticky="w", in_=frame)
+
+        l = Label(master, text="Path to item: ")
+        l.grid(row=2, column=0, sticky="e", in_=frame)
+        e = Entry(master)
+        e.grid(row=2, column=1, sticky="nsew", in_=frame)
+        self.accessor = e
+
         return frame
 
     def mk_tree_view(self, master):
@@ -99,7 +110,7 @@ class MainInterface(object):
         """
         <<TreeviewSelect>> event. When an item in the tree is selected, we
         update the Value view with a representation of the value that was
-        selected.
+        selected. We also update the `Path to item` entry.
         """
         item_id = self.tree.selection()[0]
         val_value = self.item_values[item_id]
@@ -108,6 +119,29 @@ class MainInterface(object):
             self.text.insert("1.0", pprint.pformat(val_value))
         else:
             self.text.insert("1.0", val_value)
+
+        # Set "Path to entry" field value
+        item_hier = []
+        while item_id:
+            obj = self.item_values[item_id]
+            obj_name = self.tree.item(item_id)['text']
+            obj_type = type(obj).__name__
+            item_hier.insert(0, (obj_name, obj_type))
+            item_id = self.tree.parent(item_id)
+
+        accessor_path = "root"
+        parent_type = type(self.obj).__name__
+        for obj_name, obj_type in item_hier:
+            if parent_type in ('list', 'set', 'tuple'):
+                accessor_path += '[{}]'.format(obj_name)
+            elif parent_type == 'dict':
+                accessor_path += '["{}"]'.format(obj_name)
+            else:
+                accessor_path += '.{}'.format(obj_name)
+            parent_type = obj_type
+        self.accessor.delete(0, END)
+        self.accessor.insert(0, accessor_path)
+
 
     def ev_treeview_open(self, ev):
         """
