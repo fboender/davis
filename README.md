@@ -39,9 +39,7 @@ As a library for inspecting data in running Python programs:
     davis.vis(my_data)
 
 This will pause the execution of your program at the call to `davis.vis()` and
-pop-up a window that lets you inspect `my_data`:
-
-![](https://raw.githubusercontent.com/fboender/davis/master/contrib/scrsht_inline.png)
+pop-up a window that lets you inspect `my_data`.
 
 You can also invoke Davis from the command-line to load data from a file:
 
