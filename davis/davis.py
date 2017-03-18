@@ -96,19 +96,31 @@ class MainInterface(object):
         """
         Construct the value viewer frame.
         """
-        frame = Frame(master, bg="#0000FF", bd=0)
-        frame.grid_rowconfigure(0, weight=1)
-        frame.grid_columnconfigure(0, weight=1)
+        notebook = ttk.Notebook(master)
+        frame_value = ttk.Frame(notebook)
+        frame_docstr = ttk.Frame(notebook)
+        frame_value.grid_rowconfigure(0, weight=1)
+        frame_value.grid_columnconfigure(0, weight=1)
+        frame_docstr.grid_rowconfigure(0, weight=1)
+        frame_docstr.grid_columnconfigure(0, weight=1)
+        notebook.add(frame_value, text='Value')
+        notebook.add(frame_docstr, text='Docstring')
 
-        text = Text(frame)
-        text.grid(row=0, column=0, sticky="nsew", in_=frame)
+        text_value = Text(frame_value)
+        text_value.grid(row=0, column=0, sticky="nsew", in_=frame_value)
+        scrollbar = Scrollbar(frame_value, command=text_value.yview)
+        scrollbar.grid(row=0, column=1, sticky="ns", in_=frame_value)
+        text_value['yscrollcommand'] = scrollbar.set
+        self.text_value = text_value
 
-        scrollbar = Scrollbar(frame, command=text.yview)
-        scrollbar.grid(row=0, column=1, sticky="ns", in_=frame)
-        text['yscrollcommand'] = scrollbar.set
+        text_docstr = Text(frame_docstr)
+        text_docstr.grid(row=0, column=0, sticky="nsew", in_=frame_docstr)
+        scrollbar = Scrollbar(frame_docstr, command=text_docstr.yview)
+        scrollbar.grid(row=0, column=1, sticky="ns", in_=frame_docstr)
+        text_docstr['yscrollcommand'] = scrollbar.set
+        self.text_docstr = text_docstr
 
-        self.text = text
-        return frame
+        return notebook
 
     def ev_treeview_select(self, ev):
         """
@@ -117,12 +129,19 @@ class MainInterface(object):
         selected. We also update the `Path to item` entry.
         """
         item_id = self.tree.selection()[0]
-        val_value = self.item_values[item_id]
-        self.text.delete(1.0, END)
+        obj = self.item_values[item_id]
+
+        # Update Value view
         if self.show_raw_value.get() == 0:
-            self.text.insert("1.0", pprint.pformat(val_value))
+            val_value = pprint.pformat(obj)
         else:
-            self.text.insert("1.0", val_value)
+            val_value = obj
+        self.text_value.delete(1.0, END)
+        self.text_value.insert("1.0", val_value)
+
+        # Update docstr view
+        self.text_docstr.delete(1.0, END)
+        self.text_docstr.insert("1.0", str(getattr(obj, '__doc__')))
 
         # Set "Path to entry" field value
         item_hier = []

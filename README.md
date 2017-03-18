@@ -6,7 +6,8 @@ and easier to use than `print()` and `pprint()` for inspecting data structures
 in Python.
 
 Davis can currently visualize Python data structures and JSON from running
-Python programs or from files.
+Python programs or from files. It shows values, doc strings and the path to
+the item.
 
 Here's what it looks like:
 
