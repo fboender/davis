@@ -259,8 +259,11 @@ if __name__ == "__main__":
         fname = sys.argv[1]
         with open(fname, 'r') as f:
             contents = f.read()
-    else:
+    elif not sys.stdin.isatty():
         contents = sys.stdin.read()
+    else:
+        sys.stderr.write("Usage: {} <file>\n".format(sys.argv[0]))
+        sys.exit(1)
 
     decoded = None
     errs = []
