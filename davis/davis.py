@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+import pickle
 import pprint
 try:
     from Tkinter import *  # Python 2
@@ -268,6 +269,11 @@ if __name__ == "__main__":
     decoded = None
     errs = []
 
+    if not decoded:
+        try:
+            decoded = pickle.loads(contents)
+        except Exception as e:
+            errs.append( ('pickle', str(e)) )
     if not decoded:
         try:
             decoded = json.loads(contents)

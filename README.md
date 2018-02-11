@@ -5,9 +5,9 @@ Davis is a data visualizer for Python. The goal is to make something better
 and easier to use than `print()` and `pprint()` for inspecting data structures
 in Python.
 
-Davis can currently visualize Python data structures and JSON from running
-Python programs or from files. It shows values, doc strings and the path to
-the item.
+Davis can currently visualize Python data structures, pickled objects and JSON
+from running Python programs or from files. It shows values, doc strings and
+the path to the item.
 
 Here's what it looks like:
 
@@ -42,10 +42,17 @@ As a library for inspecting data in running Python programs:
 This will pause the execution of your program at the call to `davis.vis()` and
 pop-up a window that lets you inspect `my_data`.
 
+To inspect all local variables in the current scope:
+
+    import davis
+    davis.vis(locals())
+
 You can also invoke Davis from the command-line to load data from a file:
 
     $ wget -O r_programming.json https://www.reddit.com/r/programming/.json
     $ davis.py r_programming.json
+
+    $ davis.py user_sync.pickle
 
 Or from STDIN:
 
