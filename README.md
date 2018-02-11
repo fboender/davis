@@ -29,6 +29,15 @@ To install Tkinter, see: http://tkinter.unpythonic.net/wiki/How_to_install_Tkint
     sudo apt-get install python3-tk
     sudo pip install davis
 
+### System-wide commandline tool
+
+If you want to use Davis as a system-wide commandline tool and not just as a
+Python lib, you can copy the `davis.py` file somewhere in your path. For
+example:
+
+    $ wget https://raw.githubusercontent.com/fboender/davis/master/davis/davis.py
+    $ sudo mv davis.py /usr/local/bin/
+    $ sudo chmod 755 /usr/local/bin/davis.py
 
 ## Usage
 
