@@ -19,7 +19,7 @@ setup(
     url='https://github.com/fboender/davis',
 
     author='Ferry Boender',
-    author_email='ferry.boender@electricmonk.nl',
+    author_email='ferry.boender@gmail.com',
 
     packages=['davis'],
 
