@@ -37,6 +37,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: System :: Installation/Setup',
         'Topic :: System :: Systems Administration',
+        'Topic :: Software Development :: Debuggers',
         'Topic :: Utilities',
     ],
 )
